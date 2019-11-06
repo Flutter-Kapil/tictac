@@ -177,10 +177,7 @@ class _TicTacToeState extends State<TicTacToe> with SingleTickerProviderStateMix
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+
 
   void updateBox(int r, int c) {
     if (legitMove(board[r][c])) {
@@ -209,7 +206,7 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     myController =
-        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+        AnimationController(duration: Duration(milliseconds: 500), vsync: this,value: 0.0);
     super.initState();
   }
 
@@ -240,6 +237,7 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
       ),
     );
   }
+
 }
 
 
@@ -278,4 +276,11 @@ class _AnimatedStatusState extends State<AnimatedStatus> with SingleTickerProvid
       scale: Tween(begin: 1.0, end: 2.0).transform(smoothAnimation.value),
       child:Text(getCurrentStatus(),style: TextStyle(fontSize:25,fontFamily: 'Quicksand',color: ColorTween(begin: Colors.white, end: Colors.red).transform(myController.value),),),
     );
-  }}
+  }
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+}
