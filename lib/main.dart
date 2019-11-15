@@ -142,12 +142,12 @@ class _TicTacToeState extends State<TicTacToe>
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Text(
-                        'Play Against',
+                        'Player O',
                         style: TextStyle(fontSize: 25),
                       ),
                       IconButton(
                         icon: Icon(
-                          computerPlayer ? Icons.person : Icons.computer,
+                          computerPlayer ? Icons.computer : Icons.person,
                           size: 35,
                           color: computerPlayer ? Colors.green : Colors.red,
                         ),
