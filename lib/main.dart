@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'gameLogic.dart';
 import 'custom_widgets.dart';
@@ -133,31 +135,38 @@ class _TicTacToeState extends State<TicTacToe>
             Expanded(
               flex: 2,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Expanded(
-                    child: SizedBox(),
-                    flex: 1,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                      child: FlatButton(
-                        color: Color(0xFF848AC1),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text(
+                        'Play Against',
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          computerPlayer ? Icons.person : Icons.computer,
+                          size: 35,
+                          color: computerPlayer ? Colors.green : Colors.red,
+                        ),
                         onPressed: () {
-                          gameReset();
-                          print('test');
+                          computerPlayer = !computerPlayer;
                           setState(() {});
                         },
-                        child: Text("Reset",
-                            style:
-                                TextStyle(fontSize: 25, color: Colors.white)),
-                      ),
-                    ),
+                      )
+                    ],
                   ),
-                  Expanded(
-                    child: SizedBox(),
-                    flex: 1,
+                  IconButton(
+                    icon: Icon(
+                      Icons.refresh,
+                      size: 50,
+                    ),
+                    onPressed: () {
+                      gameReset();
+                      setState(() {});
+                    },
                   ),
                 ],
               ),
@@ -168,10 +177,15 @@ class _TicTacToeState extends State<TicTacToe>
     );
   }
 
-  void updateBox(int r, int c) {
+  void updateBox(int r, int c) async {
     if (legitMove(board[r][c])) {
       board[r][c] = currentPlayer;
       changePlayerIfGameIsNotOver();
+      if (computerPlayer) {
+        sleep(Duration(seconds: 1));
+        computerMove(board);
+        changePlayerIfGameIsNotOver();
+      }
     }
   }
 }
