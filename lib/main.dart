@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'oanimated_icon.dart';
+import 'Animated_icon.dart';
 import 'gameLogic.dart';
 
 void main() => runApp(MyApp());
