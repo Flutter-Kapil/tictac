@@ -181,7 +181,7 @@ class _TicTacToeState extends State<TicTacToe>
     if (legitMove(board[r][c])) {
       board[r][c] = currentPlayer;
       changePlayerIfGameIsNotOver();
-      if (computerPlayer) {
+      if (computerPlayer && !winnerCheck(board)) {
         sleep(Duration(seconds: 1));
         computerMove(board);
         changePlayerIfGameIsNotOver();
