@@ -153,7 +153,11 @@ class _TicTacToeState extends State<TicTacToe>
                         ),
                         onPressed: () {
                           computerPlayer = !computerPlayer;
-                          setState(() {});
+                          setState(() {
+                            if(computerPlayer && !winnerCheck(board)){
+                              computerMove(board);
+                            }
+                          });
                         },
                       )
                     ],
@@ -182,10 +186,12 @@ class _TicTacToeState extends State<TicTacToe>
       board[r][c] = currentPlayer;
       changePlayerIfGameIsNotOver();
       Future.delayed(Duration(seconds: 2),(){
-        computerPlayer?computerMove(board):null;
-        setState(() {
+        if(computerPlayer && !winnerCheck(board) && currentPlayer ==token.o) {
+           computerMove(board);
+          setState(() {
 
-        });
+          });
+        }
       });
 
     }
