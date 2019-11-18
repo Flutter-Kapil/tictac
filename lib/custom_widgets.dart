@@ -32,6 +32,13 @@ class _AnimatedXIconState extends State<AnimatedXIcon>
       ),
     );
   }
+
+  @override
+  void dispose() {
+    myController.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
 }
 
 class AnimatedOIcon extends StatefulWidget {
@@ -65,5 +72,12 @@ class _AnimatedOIconState extends State<AnimatedOIcon>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    myController.dispose();
+    // TODO: implement dispose
+    super.dispose();
   }
 }

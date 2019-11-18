@@ -177,15 +177,17 @@ class _TicTacToeState extends State<TicTacToe>
     );
   }
 
-  void updateBox(int r, int c) async {
+  void updateBox(int r, int c) {
     if (legitMove(board[r][c])) {
       board[r][c] = currentPlayer;
       changePlayerIfGameIsNotOver();
-      if (computerPlayer && !winnerCheck(board)) {
-        sleep(Duration(seconds: 1));
-        computerMove(board);
-        changePlayerIfGameIsNotOver();
-      }
+      Future.delayed(Duration(seconds: 2),(){
+        computerPlayer?computerMove(board):null;
+        setState(() {
+
+        });
+      });
+
     }
   }
 }
@@ -233,6 +235,8 @@ class AnimatedStatus extends StatefulWidget {
 class _AnimatedStatusState extends State<AnimatedStatus>
     with SingleTickerProviderStateMixin {
   AnimationController myController;
+
+
   @override
   void initState() {
     myController =

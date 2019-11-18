@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 enum token { x, o }
@@ -173,6 +174,7 @@ List<List<int>> possiblePositions(List<List<token>> board) {
 }
 
 computerMove(List<List<token>> board) {
+//  sleep(Duration(seconds: 2));
   List<List<int>> possibleMoves = possiblePositions(board);
   int randomItemPositionFromList = Random().nextInt(possibleMoves.length);
   print('randomItemPositionFromList : $randomItemPositionFromList ');
@@ -180,4 +182,5 @@ computerMove(List<List<token>> board) {
   print('computer will tap O on ${makeThisMove[0]}${makeThisMove[1]}');
 
   board[makeThisMove[0]][makeThisMove[1]] = token.o;
+  changePlayerIfGameIsNotOver();
 }
