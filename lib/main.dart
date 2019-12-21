@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'gameLogic.dart';
 import 'custom_widgets.dart';
@@ -137,35 +135,42 @@ class _TicTacToeState extends State<TicTacToe>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.center,
+                textBaseline: TextBaseline.alphabetic,
                 children: <Widget>[
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
                         'Player O',
                         style: TextStyle(fontSize: 25),
                       ),
-                      IconButton(
-                        icon: Icon(
-                          computerPlayer ? Icons.computer : Icons.person,
-                          size: 35,
-                          color: computerPlayer ? Colors.green : Colors.red,
-                        ),
-                        onPressed: () {
-                          computerPlayer = !computerPlayer;
-                          setState(() {
-                            if(computerPlayer && !winnerCheck(board)){
-                              computerMove(board);
-                            }
-                          });
-                        },
-                      )
+                      Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.person,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                          Switch(
+                            value: computerPlayer,
+                            onChanged: (value) {
+                              computerPlayer = value;
+                              setState(() {});
+                            },
+                          ),
+                          Icon(
+                            Icons.computer,
+                            size: 30,
+                            color: Colors.white,
+                          )
+                        ],
+                      ),
                     ],
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.refresh,
-                      size: 50,
+                      size: 40,
                     ),
                     onPressed: () {
                       gameReset();
@@ -185,15 +190,14 @@ class _TicTacToeState extends State<TicTacToe>
     if (legitMove(board[r][c])) {
       board[r][c] = currentPlayer;
       changePlayerIfGameIsNotOver();
-      Future.delayed(Duration(seconds: 2),(){
-        if(computerPlayer && !winnerCheck(board) && currentPlayer ==token.o) {
-           computerMove(board);
-          setState(() {
-
-          });
-        }
-      });
-
+      if (computerPlayer) {
+        Future.delayed(Duration(seconds: 1), () {
+          if (!winnerCheck(board) && currentPlayer == token.o) {
+            computerMove(board);
+            setState(() {});
+          }
+        });
+      }
     }
   }
 }
@@ -241,7 +245,6 @@ class AnimatedStatus extends StatefulWidget {
 class _AnimatedStatusState extends State<AnimatedStatus>
     with SingleTickerProviderStateMixin {
   AnimationController myController;
-
 
   @override
   void initState() {
