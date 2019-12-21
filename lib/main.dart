@@ -23,11 +23,16 @@ class TicTacToe extends StatefulWidget {
   _TicTacToeState createState() => _TicTacToeState();
 }
 
-bool changeWinningStatusColor = false;
-double endTweenValue = 1.0;
 
 class _TicTacToeState extends State<TicTacToe>
     with SingleTickerProviderStateMixin {
+
+
+  bool changeWinningStatusColor = false;
+  double endTweenValue = 1.0;
+  bool disableTouch = false;
+
+
   Widget getIconFromToken(token t) {
     if (t == token.o) {
       return AnimatedOIcon();
@@ -119,14 +124,17 @@ class _TicTacToeState extends State<TicTacToe>
             ),
             Expanded(
               flex: 7,
-              child: Container(
-                margin: EdgeInsets.all(6),
-                child: Column(
-                  children: <Widget>[
-                    expandedRow(0),
-                    expandedRow(1),
-                    expandedRow(2),
-                  ],
+              child: AbsorbPointer(
+                absorbing: disableTouch,
+                child: Container(
+                  margin: EdgeInsets.all(6),
+                  child: Column(
+                    children: <Widget>[
+                      expandedRow(0),
+                      expandedRow(1),
+                      expandedRow(2),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -191,12 +199,19 @@ class _TicTacToeState extends State<TicTacToe>
       board[r][c] = currentPlayer;
       changePlayerIfGameIsNotOver();
       if (computerPlayer) {
-        Future.delayed(Duration(seconds: 1), () {
+
+        disableTouch = true;
+        print('its computer move so disabling touch, new value for touch is $disableTouch');
+        setState(() {
+
+        });
+        Future.delayed(Duration(seconds: 4), () {
           if (!winnerCheck(board) && currentPlayer == token.o) {
             computerMove(board);
             setState(() {});
           }
         });
+        disableTouch = false;
       }
     }
   }
